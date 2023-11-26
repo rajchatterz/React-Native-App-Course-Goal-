@@ -1,6 +1,7 @@
 import Item from './Component/Item';
 import { StyleSheet, Text, View,Button,TextInput, ScrollView,FlatList } from 'react-native';
 import { useState } from 'react';
+import Input from './Component/Input';
 export default function App() {
   const [storeData, setStoredData] = useState('')
   const [ courseGoal,setCourseGoal] = useState([])
@@ -9,19 +10,20 @@ export default function App() {
   };
   
   function addGoalHandler() { 
-    setCourseGoal((e)=>[...e,{text:storeData,id:Math.random()}])
+    setCourseGoal((e) => [...e, { text: storeData, id: Math.random() }])
+    setStoredData('')
   };
+  function deleteGoalHandler() {
+    console.log('delete')
+  }
   return (
     <View style={styles.aooContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput onChangeText={goalInputHandler} style={styles.textInput} placeholder='Your Course Goal' />
-        <Button onPress={addGoalHandler} title='Add Goal'/>
-      </View>
+      <Input input={goalInputHandler} value={storeData} buttonHandler={ addGoalHandler} />
       <View style={styles.listGoal}  >
 
         <FlatList renderItem={(itemData) => {
           return (
-            <Item itemData={ itemData.item.text} />
+            <Item onDelteItem={deleteGoalHandler} itemData={ itemData.item.text} />
           )
         }} data={courseGoal} alwaysBounceVertical={false}
           keyExtractor={(item, index) => {

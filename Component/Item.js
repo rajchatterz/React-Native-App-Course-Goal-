@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native"
-import {View,Text} from 'react-native'
-const Item = ({itemData}) => {
+import {View,Text,Pressable} from 'react-native'
+const Item = ({itemData,onDelteItem}) => {
     return (
-        <View style={styles.goalItem}>
+        <Pressable onPress={onDelteItem}>
+            <View style={styles.goalItem}>
               <Text style={styles.text}>{ itemData}</Text>
-        </View>
+            </View>
+        </Pressable>
     )
 }
 export default Item
