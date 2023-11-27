@@ -2,6 +2,7 @@ import Item from './Component/Item';
 import { StyleSheet, Text, View,Button,TextInput, ScrollView,FlatList } from 'react-native';
 import { useState } from 'react';
 import Input from './Component/Input';
+import { StatusBar } from 'expo-status-bar';
 export default function App() {
   const [storeData, setStoredData] = useState('')
   const [courseGoal, setCourseGoal] = useState([])
@@ -32,6 +33,8 @@ export default function App() {
     })
   }
   return (
+    <>
+      <StatusBar style="dark"/>
     <View style={styles.aooContainer}>
       <Button title="Add new Goal" color="purple" onPress={startAtGoalHandler} /> 
       <Input input={goalInputHandler} closeModal={endAddGoalHandler} visible={modalVisible} value={storeData} buttonHandler={ addGoalHandler} />
@@ -49,7 +52,8 @@ export default function App() {
 
       </View>
       
-    </View>
+      </View>
+      </>
   );
 }
 
