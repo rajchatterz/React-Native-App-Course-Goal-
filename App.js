@@ -4,26 +4,42 @@ import { useState } from 'react';
 import Input from './Component/Input';
 export default function App() {
   const [storeData, setStoredData] = useState('')
-  const [ courseGoal,setCourseGoal] = useState([])
+  const [courseGoal, setCourseGoal] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
+  
+  function startAtGoalHandler() {
+    setModalVisible(true)
+  }
+  function endAddGoalHandler() {
+    setModalVisible(false)
+  }
   function goalInputHandler(enteredText) { 
     setStoredData(enteredText)
   };
   
   function addGoalHandler() { 
+    if (storeData.trim().length === 0) {
+      return
+    }
     setCourseGoal((e) => [...e, { text: storeData, id: Math.random() }])
     setStoredData('')
+    endAddGoalHandler()
+    
   };
-  function deleteGoalHandler() {
-    console.log('delete')
+  function deleteGoalHandler(id) {
+    setCourseGoal(e => {
+      return e.filter((e)=>e.id!==id)
+    })
   }
   return (
     <View style={styles.aooContainer}>
-      <Input input={goalInputHandler} value={storeData} buttonHandler={ addGoalHandler} />
+      <Button title="Add new Goal" color="purple" onPress={startAtGoalHandler} /> 
+      <Input input={goalInputHandler} closeModal={endAddGoalHandler} visible={modalVisible} value={storeData} buttonHandler={ addGoalHandler} />
       <View style={styles.listGoal}  >
 
         <FlatList renderItem={(itemData) => {
           return (
-            <Item onDelteItem={deleteGoalHandler} itemData={ itemData.item.text} />
+            <Item id={itemData.item.id} onDelteItem={deleteGoalHandler} itemData={ itemData.item.text} />
           )
         }} data={courseGoal} alwaysBounceVertical={false}
           keyExtractor={(item, index) => {

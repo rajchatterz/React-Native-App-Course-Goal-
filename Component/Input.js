@@ -1,13 +1,18 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { View,TextInput,Button } from 'react-native'
-const Input = ({ input, buttonHandler,value }) => {
+import { View,TextInput,Button,Modal } from 'react-native'
+const Input = ({ input,closeModal, buttonHandler,value ,visible}) => {
     
   return (
-    <View style={styles.inputContainer}>
-        <TextInput onChangeText={input} value={value} style={styles.textInput} placeholder='Your Course Goal' />
-        <Button onPress={buttonHandler} title='Add Goal'/>
-    </View>
+      <Modal visible={visible} animationType='fade'>
+          <View style={styles.inputContainer}>
+              <TextInput onChangeText={input} value={value} style={styles.textInput} placeholder='Your Course Goal' />
+              <Button title='cancel' onPress={closeModal}/>
+              <View>
+              <Button onPress={buttonHandler} title='Add Goal' />
+              </View>
+        </View>
+    </Modal>
   )
 }
 
